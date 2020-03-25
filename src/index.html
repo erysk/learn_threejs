@@ -17,21 +17,39 @@
     let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     // レンダラー
     let renderer = new THREE.WebGLRenderer();
+
+    // ↑の3つが動作の準備に必要な3要素見たい
+
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
+    //　幾何学ってなんだ...？
+    // 幾何学とは: 図形や空間の性質について研究する数学の分野である。 > wiki
+    // ボックスを形取るような幾何学を代入してるってことかな。
+    // 複雑な形を表現したいときはここを自作しないといけなかったりするんだろうか。
     let geometry = new THREE.BoxGeometry();
+    // 物体の材質の定義かな、色とか、塗り分けとか複雑なものはどうやって指定するんだろう...。
     let material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    // キューブ型オブジェクトの定義はこれか。幾何学と物質を引数にとって生成するんかな。
     let cube = new THREE.Mesh( geometry, material );
+    // シーンに追加
     scene.add( cube );
 
+    // 初期位置だろうなぁ、クリックとかで発火させれば瞬間移動できるのかな。
+    // 値が大きくなればなるほど奥にあるように見えるっぽい。
     camera.position.z = 5;
 
+    // 回転アニメーションの関数定義だな。
+    // rotation と position 以外の関数も把握せねば。
     function animate() {
         requestAnimationFrame( animate );
         renderer.render( scene, camera );
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
+        cube.rotation.z += 0.01;
+
+        // 以下みたいにすると右にスーッと動いていって面白いw
+        // cube.position.x += 0.1;
     }
     animate();
 </script>
